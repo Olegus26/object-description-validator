@@ -1,0 +1,84 @@
+<div class="form-group">
+  <label for="description">Описание объекта</label>
+  <textarea id="description" rows="6" placeholder="Введите информативное описание объекта..."></textarea>
+  <div id="charCounter">0 / 300</div>
+  <button id="saveBtn" disabled>💾 Сохранить</button>
+</div>
+
+<style>
+  .form-group {
+    max-width: 600px;
+    font-family: Arial, sans-serif;
+    margin-top: 1rem;
+  }
+
+  #description {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+  }
+
+  #description.invalid {
+    border-color: #ff4d4d;
+    background-color: #fff5f5;
+  }
+
+  #description.valid {
+    border-color: #4caf50;
+    background-color: #f6fff6;
+  }
+
+  #charCounter {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #666;
+  }
+
+  #charCounter.red {
+    color: #ff4d4d;
+  }
+
+  #saveBtn {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  #saveBtn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+</style>
+
+<script>
+  const MIN_LEN = 300;
+  const description = document.getElementById("description");
+  const counter = document.getElementById("charCounter");
+  const saveBtn = document.getElementById("saveBtn");
+
+  description.addEventListener("input", () => {
+    const len = description.value.trim().length;
+    counter.textContent = `${len} / ${MIN_LEN}`;
+
+    if (len < MIN_LEN) {
+      description.classList.add("invalid");
+      description.classList.remove("valid");
+      counter.classList.add("red");
+      saveBtn.disabled = true;
+    } else {
+      description.classList.remove("invalid");
+      description.classList.add("valid");
+      counter.classList.remove("red");
+      saveBtn.disabled = false;
+    }
+  });
+</script>
